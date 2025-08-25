@@ -13,6 +13,15 @@ export const g = StyleSheet.create({
     backgroundColor: colors.black, borderRadius: 12, paddingVertical: spacing.md, alignItems: 'center',
   },
   buttonPrimaryText: { color: colors.white, fontSize: 18, fontWeight: '700' },
+  buttonSecondary: {
+    backgroundColor: colors.white, borderRadius: 12, paddingVertical: spacing.md, alignItems: 'center',
+    borderWidth: 1, borderColor: colors.black,
+  },
+  buttonSecondaryText: { color: colors.black, fontSize: 18, fontWeight: '600' },
+  buttonGhost: {
+    backgroundColor: 'transparent', borderRadius: 12, paddingVertical: spacing.md, alignItems: 'center',
+  },
+  buttonGhostText: { color: colors.textSecondary, fontSize: 16, fontWeight: '500' },
   input: {
     borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 10,
     paddingHorizontal: spacing.lg, paddingVertical: spacing.md, backgroundColor: colors.white,

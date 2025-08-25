@@ -14,7 +14,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+// Navigation is handled automatically by RootNavigator based on auth state
 
 import { g } from '../../styles/global';
 import { colors, spacing } from '../../theme';
@@ -38,7 +38,6 @@ function extractAuth(res: any) {
 }
 
 export default function LoginModal({ visible, onClose }: Props) {
-  const navigation = useNavigation();
   const { login: authLogin } = useAuth();
 
   const {
@@ -84,16 +83,9 @@ export default function LoginModal({ visible, onClose }: Props) {
         throw new Error('Unexpected login response from server.');
       }
 
-      // Set auth and navigate
+      // Set auth and close modal - RootNavigator will automatically switch to main app
       authLogin(auth.token, auth.user);
       onClose?.();
-
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'MainApp' as never }],
-        }),
-      );
     } catch (e: any) {
       console.log('[LoginModal] Error:', e);
       const msg =

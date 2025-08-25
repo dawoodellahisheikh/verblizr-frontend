@@ -268,13 +268,7 @@ const HomeScreen: React.FC = () => {
   // Standard 2-up grid (non-carousel) — used in "More"
   const col2 = (width - padH * 2 - gap) / 2;
 
-  const onLogout = async () => {
-    try {
-      await logout();
-    } finally {
-      nav.reset({ index: 0, routes: [{ name: 'Login' }] });
-    }
-  };
+
 
   // ---- Quick actions (2-up pages) ----
   type QuickAction = {
@@ -502,11 +496,8 @@ const HomeScreen: React.FC = () => {
                 subtitle="Sign out and return to login"
                 icon={{ lib: 'MaterialIcons', name: 'logout' }}
                 onPress={async () => {
-                  try {
-                    await logout();
-                  } finally {
-                    nav.reset({ index: 0, routes: [{ name: 'Login' }] });
-                  }
+                  // RootNavigator will automatically switch to AuthNavigator when auth state changes
+                  await logout();
                 }}
                 filledRed
                 testID="row-logout"

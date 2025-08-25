@@ -326,15 +326,33 @@ const PaymentHistoryScreen: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onApplyFilters = useCallback(() => {
-    // DES Added: Validate date picker values only (removed manual input validation)
+    // DES Added: Enhanced date validation with better user feedback
     const fromFilter = dateToApiFormat(fromDate);
     const toFilter = dateToApiFormat(toDate);
 
-    // DES Added: Validate date range
-    if (fromDate && toDate && fromDate > toDate) {
-      Alert.alert('Invalid date range', 'From date cannot be after To date');
-      return;
+    // DES Added: Improved date range validation
+    if (fromDate && toDate) {
+      // DES Added: Compare dates properly (ignoring time)
+      const fromDateOnly = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+      const toDateOnly = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+      
+      if (fromDateOnly > toDateOnly) {
+        Alert.alert(
+          'Invalid Date Range', 
+          'The "From" date cannot be after the "To" date. Please adjust your selection.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
     }
+
+    // DES Added: Log date filtering for debugging
+    console.log('[PaymentHistory] Applying filters:', {
+      fromDate: fromFilter,
+      toDate: toFilter,
+      fromDateObj: fromDate,
+      toDateObj: toDate
+    });
 
     fetchPage(1, true);
   }, [fromDate, toDate, fetchPage]);
@@ -345,6 +363,33 @@ const PaymentHistoryScreen: React.FC = () => {
     setToDate(null);
     fetchPage(1, true);
   }, [fetchPage]);
+
+  // DES Added: Quick date selection helpers
+  const onSelectToday = useCallback(() => {
+    const today = new Date();
+    const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    setFromDate(todayNormalized);
+    setToDate(todayNormalized);
+  }, []);
+
+  const onSelectThisWeek = useCallback(() => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - dayOfWeek); // Go to Sunday
+    const startNormalized = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate());
+    const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    setFromDate(startNormalized);
+    setToDate(todayNormalized);
+  }, []);
+
+  const onSelectThisMonth = useCallback(() => {
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    setFromDate(startOfMonth);
+    setToDate(todayNormalized);
+  }, []);
 
   const onRefresh = useCallback(async () => {
     try {
@@ -563,8 +608,70 @@ const PaymentHistoryScreen: React.FC = () => {
                     marginBottom: spacing.sm,
                     fontSize: 13
                   }}>
-                    Select dates using the date picker
+                    Select dates using the date picker or quick options below
                   </Text>
+                  
+                  {/* DES Added: Quick date selection buttons */}
+                  <View style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    gap: spacing.xs,
+                    marginBottom: spacing.md,
+                  }}>
+                    <TouchableOpacity
+                      onPress={onSelectToday}
+                      style={{
+                        backgroundColor: '#F3F4F6',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        borderRadius: 999,
+                        borderWidth: 1,
+                        borderColor: '#E5E7EB',
+                      }}
+                    >
+                      <Text style={{
+                        fontSize: 12,
+                        fontWeight: '600',
+                        color: colors.textSecondary,
+                      }}>Today</Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                      onPress={onSelectThisWeek}
+                      style={{
+                        backgroundColor: '#F3F4F6',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        borderRadius: 999,
+                        borderWidth: 1,
+                        borderColor: '#E5E7EB',
+                      }}
+                    >
+                      <Text style={{
+                        fontSize: 12,
+                        fontWeight: '600',
+                        color: colors.textSecondary,
+                      }}>This Week</Text>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                      onPress={onSelectThisMonth}
+                      style={{
+                        backgroundColor: '#F3F4F6',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        borderRadius: 999,
+                        borderWidth: 1,
+                        borderColor: '#E5E7EB',
+                      }}
+                    >
+                      <Text style={{
+                        fontSize: 12,
+                        fontWeight: '600',
+                        color: colors.textSecondary,
+                      }}>This Month</Text>
+                    </TouchableOpacity>
+                  </View>
                   
                   <View style={{ flexDirection: 'row', columnGap: spacing.sm }}>
                     <View style={{ flex: 1 }}>
@@ -899,8 +1006,70 @@ const PaymentHistoryScreen: React.FC = () => {
                         marginBottom: spacing.sm,
                         fontSize: 13
                       }}>
-                        Select dates using the date picker
+                        Select dates using the date picker or quick options below
                       </Text>
+                      
+                      {/* DES Added: Quick date selection buttons for list view */}
+                      <View style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        gap: spacing.xs,
+                        marginBottom: spacing.md,
+                      }}>
+                        <TouchableOpacity
+                          onPress={onSelectToday}
+                          style={{
+                            backgroundColor: '#F3F4F6',
+                            paddingVertical: 6,
+                            paddingHorizontal: 12,
+                            borderRadius: 999,
+                            borderWidth: 1,
+                            borderColor: '#E5E7EB',
+                          }}
+                        >
+                          <Text style={{
+                            fontSize: 12,
+                            fontWeight: '600',
+                            color: colors.textSecondary,
+                          }}>Today</Text>
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity
+                          onPress={onSelectThisWeek}
+                          style={{
+                            backgroundColor: '#F3F4F6',
+                            paddingVertical: 6,
+                            paddingHorizontal: 12,
+                            borderRadius: 999,
+                            borderWidth: 1,
+                            borderColor: '#E5E7EB',
+                          }}
+                        >
+                          <Text style={{
+                            fontSize: 12,
+                            fontWeight: '600',
+                            color: colors.textSecondary,
+                          }}>This Week</Text>
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity
+                          onPress={onSelectThisMonth}
+                          style={{
+                            backgroundColor: '#F3F4F6',
+                            paddingVertical: 6,
+                            paddingHorizontal: 12,
+                            borderRadius: 999,
+                            borderWidth: 1,
+                            borderColor: '#E5E7EB',
+                          }}
+                        >
+                          <Text style={{
+                            fontSize: 12,
+                            fontWeight: '600',
+                            color: colors.textSecondary,
+                          }}>This Month</Text>
+                        </TouchableOpacity>
+                      </View>
                       
                       <View style={{ flexDirection: 'row', columnGap: spacing.sm }}>
                         <View style={{ flex: 1 }}>
@@ -1120,10 +1289,14 @@ const PaymentHistoryScreen: React.FC = () => {
                     setShowFromPicker(false);
                   }
                   if (selectedDate) {
-                    setFromDate(selectedDate);
+                    // DES Added: Create date at start of day to avoid timezone issues
+                    const normalizedDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+                    setFromDate(normalizedDate);
                   }
                 }}
-                maximumDate={new Date()} // DES Added: Prevent future dates
+                // DES Added: Removed maximumDate restriction to allow current date selection
+                // DES Added: Allow dates up to today (inclusive)
+                maximumDate={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)} // Allow tomorrow to ensure today is selectable
                 style={{
                   backgroundColor: colors.white,
                   width: '100%',
@@ -1219,11 +1392,14 @@ const PaymentHistoryScreen: React.FC = () => {
                     setShowToPicker(false);
                   }
                   if (selectedDate) {
-                    setToDate(selectedDate);
+                    // DES Added: Create date at start of day to avoid timezone issues
+                    const normalizedDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+                    setToDate(normalizedDate);
                   }
                 }}
-                maximumDate={new Date()} // DES Added: Prevent future dates
-                minimumDate={fromDate} // DES Added: Ensure To date is after From date
+                // DES Added: Allow current date selection and ensure To date can be >= From date
+                maximumDate={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)} // Allow tomorrow to ensure today is selectable
+                minimumDate={fromDate || undefined} // DES Added: Ensure To date is >= From date (but allow if no From date set)
                 style={{
                   backgroundColor: colors.white,
                   width: '100%',

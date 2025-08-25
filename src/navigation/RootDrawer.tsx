@@ -38,7 +38,7 @@
 //       drawerContent={props => <DrawerContent {...props} />}
 //     >
 //       {/* Keep your entire app tree intact inside the drawer */}
-//       <Drawer.Screen name="App" component={RootNavigator} />
+//       <Drawer.Screen name="App" component={MainNavigator} />
 //     </Drawer.Navigator>
 //   );
 // }
@@ -85,7 +85,7 @@
 //       drawerContent={props => <DrawerContent {...props} />}
 //     >
 //       {/* Keep your entire app tree intact inside the drawer */}
-//       <Drawer.Screen name="App" component={RootNavigator} />
+//       <Drawer.Screen name="App" component={MainNavigator} />
 //     </Drawer.Navigator>
 //   );
 // }
@@ -154,7 +154,7 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerContent from './drawer/DrawerContent';
-import RootNavigator from './drawer/RootNavigator';
+import MainNavigator from './drawer/RootNavigator';
 import { useAuth } from '../context/AuthContext'; // DES Added: Import useAuth hook for logout functionality
 
 // DES Added: Import screens needed for unified navigation
@@ -176,39 +176,47 @@ export type UnifiedStackParamList = {
 const Drawer = createDrawerNavigator();
 const UnifiedStack = createNativeStackNavigator<UnifiedStackParamList>(); // DES Added: Single stack for all screens including auth with proper typing
 
-// DES Added: Unified navigation stack that includes both auth and main app screens
-function UnifiedStackNavigator() {
-  const { token, loading } = useAuth(); // DES Added: Get auth state to determine initial route
-  
+// Auth Navigator - handles authentication flow
+function AuthNavigator() {
   return (
-    <UnifiedStack.Navigator 
-      initialRouteName={loading ? "Splash" : (token ? "MainApp" : "Login")} // DES Added: Smart initial route based on auth state
-      screenOptions={{ 
+    <UnifiedStack.Navigator
+      initialRouteName="Splash"
+      screenOptions={{
         headerShown: false,
-        // DES Added: Consistent smooth slide animations for all screens
         animation: 'slide_from_right',
-        animationDuration: 300, // Slightly longer for smoother feel
+        animationDuration: 250,
       }}
     >
       <UnifiedStack.Screen name="Splash" component={SplashScreen} />
       <UnifiedStack.Screen name="Login" component={LoginScreen} />
       <UnifiedStack.Screen name="RegisterPersonal" component={RegisterPersonal} />
       <UnifiedStack.Screen name="RegisterPassword" component={RegisterPassword} />
-      {/* DES Added: Main app as a screen within the unified stack */}
-      <UnifiedStack.Screen name="MainApp" component={MainAppWithDrawer} />
     </UnifiedStack.Navigator>
   );
+}
+
+// Root Navigator - switches between Auth and Main App based on auth state
+function RootNavigator() {
+  const { token, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <UnifiedStack.Navigator screenOptions={{ headerShown: false }}>
+        <UnifiedStack.Screen name="Splash" component={SplashScreen} />
+      </UnifiedStack.Navigator>
+    );
+  }
+  
+  return token ? <MainAppWithDrawer /> : <AuthNavigator />;
 }
 
 // DES Added: Wrapper component for the main app with drawer
 function MainAppWithDrawer() {
   const win = Dimensions.get('window');
   const drawerWidth = Math.min(320, Math.round(win.width * 0.82));
-  const { logout } = useAuth(); // DES Added: Get logout function from AuthContext
 
   return (
     <Drawer.Navigator
-      id="MainDrawer"
       screenOptions={{
         headerShown: false,
         drawerType: 'front',
@@ -219,26 +227,17 @@ function MainAppWithDrawer() {
           borderTopRightRadius: 16,
           borderBottomRightRadius: 16,
         },
-        sceneContainerStyle: {
-          backgroundColor: '#FFFFFF',
-        },
-      }}
-      screenListeners={{
-        signOut: () => {
-          logout(); // Call the logout function from AuthContext
-        },
       }}
       drawerContent={props => <DrawerContent {...props} />}
     >
-      <Drawer.Screen name="App" component={RootNavigator} />
+      <Drawer.Screen name="App" component={MainNavigator} />
     </Drawer.Navigator>
   );
 }
 
 export default function RootDrawer() {
-  // DES Modified: Now using unified navigation stack that handles both auth and main app
-  // This allows smooth slide transitions between Login and Home screens
-  console.log('RootDrawer - Using unified navigation for smooth transitions');
+  // DES Modified: Now using separate auth and main navigators for better organization
+  console.log('RootDrawer - Using separate auth and main navigators');
   
-  return <UnifiedStackNavigator />;
+  return <RootNavigator />;
 }

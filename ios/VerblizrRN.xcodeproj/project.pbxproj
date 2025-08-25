@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		185BEE45C15D270AFA54F6AF /* libPods-VerblizrRN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86CE55E21E358D966DA358B5 /* libPods-VerblizrRN.a */; };
 		6DED5AE8C920BA8A38A19647 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		B0F1DBEAA4E1A6E38E19BED2 /* libPods-VerblizrRN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9667281AAF2732F8EAB9448C /* libPods-VerblizrRN.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,12 +19,12 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VerblizrRN/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VerblizrRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = VerblizrRN/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		30989D24464B9CF508533708 /* Pods-VerblizrRN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerblizrRN.debug.xcconfig"; path = "Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN.debug.xcconfig"; sourceTree = "<group>"; };
+		2DDA49AF3F75D6179D6FECAA /* Pods-VerblizrRN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerblizrRN.debug.xcconfig"; path = "Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN.debug.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = VerblizrRN/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = VerblizrRN/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9667281AAF2732F8EAB9448C /* libPods-VerblizrRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VerblizrRN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		86CE55E21E358D966DA358B5 /* libPods-VerblizrRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VerblizrRN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EF0BC853B3F9B5D78727508 /* Pods-VerblizrRN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerblizrRN.release.xcconfig"; path = "Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F02FF109A29E9649E9E906DF /* Pods-VerblizrRN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VerblizrRN.release.xcconfig"; path = "Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0F1DBEAA4E1A6E38E19BED2 /* libPods-VerblizrRN.a in Frameworks */,
+				185BEE45C15D270AFA54F6AF /* libPods-VerblizrRN.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				9667281AAF2732F8EAB9448C /* libPods-VerblizrRN.a */,
+				86CE55E21E358D966DA358B5 /* libPods-VerblizrRN.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -92,8 +92,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				30989D24464B9CF508533708 /* Pods-VerblizrRN.debug.xcconfig */,
-				F02FF109A29E9649E9E906DF /* Pods-VerblizrRN.release.xcconfig */,
+				2DDA49AF3F75D6179D6FECAA /* Pods-VerblizrRN.debug.xcconfig */,
+				9EF0BC853B3F9B5D78727508 /* Pods-VerblizrRN.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -105,13 +105,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VerblizrRN" */;
 			buildPhases = (
-				ADBE7E9F0BD8BF2F2328F352 /* [CP] Check Pods Manifest.lock */,
+				32DABF71DE46DBA14C851744 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				FA4265B42032436994CCEFAB /* [CP] Embed Pods Frameworks */,
-				B485FF4745E5441C46181F40 /* [CP] Copy Pods Resources */,
+				D5768973C3FAC032B5107A78 /* [CP] Embed Pods Frameworks */,
+				2A621AD2623A1B267968ED63 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -183,7 +183,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		ADBE7E9F0BD8BF2F2328F352 /* [CP] Check Pods Manifest.lock */ = {
+		2A621AD2623A1B267968ED63 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		32DABF71DE46DBA14C851744 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -205,24 +222,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B485FF4745E5441C46181F40 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VerblizrRN/Pods-VerblizrRN-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FA4265B42032436994CCEFAB /* [CP] Embed Pods Frameworks */ = {
+		D5768973C3FAC032B5107A78 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -255,7 +255,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30989D24464B9CF508533708 /* Pods-VerblizrRN.debug.xcconfig */;
+			baseConfigurationReference = 2DDA49AF3F75D6179D6FECAA /* Pods-VerblizrRN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -283,7 +283,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F02FF109A29E9649E9E906DF /* Pods-VerblizrRN.release.xcconfig */;
+			baseConfigurationReference = 9EF0BC853B3F9B5D78727508 /* Pods-VerblizrRN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
