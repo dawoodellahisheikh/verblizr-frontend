@@ -1,0 +1,75 @@
+source 'https://cdn.cocoapods.org/'
+
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command(
+  'node',
+  ['-p', 'require.resolve("react-native/scripts/react_native_pods.rb", {paths: [process.argv[1]]})', __dir__]
+).strip
+
+# Load react-native-permissions v5 setup (plain quotes only)
+require Pod::Executable.execute_command(
+  'node',
+  ['-p', 'require.resolve("react-native-permissions/scripts/setup.rb", {paths: [process.argv[1]]})', __dir__]
+).strip
+
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+
+# Enable only the permissions you use
+setup_permissions([
+  'Microphone',
+  # 'SpeechRecognition', # uncomment if you'll use Apple's speech API
+])
+
+
+target 'VerblizrRN' do
+  config = use_native_modules!
+  pod 'react-native-worklets-core', :path => '../node_modules/react-native-worklets-core'
+
+
+# This is required to use Hermes in the new architecture from 0 to 1 (Enable New Architecture ✅ (recommended for RN 0.76+ projects))
+# ENV['RCT_NEW_ARCH_ENABLED'] = '0'
+ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  #  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+  # pod 'RNWorklets', :podspec => '../node_modules/react-native-worklets-core/react-native-worklets-core.podspec'
+
+# Ensures the icon font resources are bundled into the iOS app.
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  post_install do |installer|
+  react_native_post_install(
+    installer,
+    config[:reactNativePath],
+    :mac_catalyst_enabled => false
+  )
+
+
+  # This tells CocoaPods to include the react-native-vector-icons resources
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+
+   # 🔧 Disable Folly coroutines to avoid <folly/coro/Coroutine.h>
+  installer.pods_project.targets.each do |t|
+    if t.name == 'RNReanimated'
+      t.build_configurations.each do |config|
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'FOLLY_HAS_COROUTINES=0'
+      end
+    end
+  end
+end
+end

@@ -1,0 +1,24 @@
+# React Native & Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# React Native Build
+/android/app/build/
+/ios/build/
+/ios/Pods/
+/*.xcworkspace
+*.xcuserdata
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Misc
+.env
