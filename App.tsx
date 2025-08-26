@@ -9,11 +9,12 @@ Putting the drawer at the top lets any screen open/close it and ensures one cons
 import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StripeProvider } from '@stripe/stripe-react-native';
-
 import { AuthProvider } from './src/context/AuthContext';
 import { VoiceSettingsProvider } from './src/context/VoiceSettingsContext';
 import RootDrawer from './src/navigation/RootDrawer';
+import { getStripePublishableKey } from './src/screens/apis/keys';
 
 // Export navigation types for use in other components
 export type RootStackParamList = {
@@ -35,7 +36,7 @@ export type RootStackParamList = {
 
 export default function App() {
   return (
-    <StripeProvider publishableKey="pk_test_51RuZcMF1SXqiudm2W8Jsq2WGbCNziUiUW46Ls5rinv7Lcr2E3BjZrHJKWfTLJkfm28th7ZRDnWzUdJjL9sBtcxqE00VMMozFFQ">
+    <StripeProvider publishableKey={getStripePublishableKey()}>
       <AuthProvider>
         <VoiceSettingsProvider>
           <NavigationContainer>

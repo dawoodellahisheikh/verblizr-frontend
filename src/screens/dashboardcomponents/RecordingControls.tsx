@@ -16,6 +16,8 @@ import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { colors, spacing } from '../../theme';
 import MicButton from './MicButton';
+import WaveformVisualizer from './WaveformVisualizer';
+import CircularProgress, { timeToProgress, getProgressColor } from './CircularProgress';
 
 export type RecordingControlsProps = {
   isRecording: boolean;
@@ -24,7 +26,10 @@ export type RecordingControlsProps = {
   onToggleMic: () => void; // start OR stop
   onPause: () => void;
   onResume: () => void;
-  size?: number;
+  /** Current recording duration in seconds */
+  recordingDuration?: number;
+  /** Maximum session duration in seconds (default: 3600 = 1 hour) */
+  maxDuration?: number;
 };
 
 export default function RecordingControls({
@@ -34,13 +39,9 @@ export default function RecordingControls({
   onToggleMic,
   onPause,
   onResume,
-  size = 108,
+  recordingDuration = 0,
+  maxDuration = 3600, // 1 hour default
 }: RecordingControlsProps) {
-  const onMicPress = () => {
-    if (!isRecording) return onToggleMic();
-    if (isPaused) return onResume();
-    return onToggleMic();
-  };
 
   const effectiveLabel = useMemo(() => {
     if (!isRecording) return statusLabel || 'Tap to start conversation';
@@ -49,17 +50,51 @@ export default function RecordingControls({
     return 'Listening…';
   }, [isRecording, isPaused, statusLabel]);
 
+  // Calculate progress for session duration
+  const sessionProgress = useMemo(() => {
+    return timeToProgress(recordingDuration, maxDuration);
+  }, [recordingDuration, maxDuration]);
+
+  const progressColor = useMemo(() => {
+    return getProgressColor(sessionProgress);
+  }, [sessionProgress]);
+
   return (
     <View style={{ alignItems: 'center', marginTop: spacing.sm }}>
-      <MicButton
-        active={isRecording}
-        paused={isPaused}
-        onPress={() => {
-          if (!isRecording) onToggleMic();
-          else if (isPaused) onResume();
-          else onToggleMic(); // stop
-        }}
-      />
+      {/* Mic button with circular progress indicator */}
+      <View style={{ position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Circular progress ring around mic button */}
+        <CircularProgress
+          progress={sessionProgress}
+          size={130} // Slightly larger than mic button (108)
+          strokeWidth={3}
+          color={progressColor}
+          backgroundColor="rgba(255, 255, 255, 0.3)"
+          visible={isRecording}
+          animated={true}
+        />
+        
+        {/* Main mic button */}
+        <MicButton
+          active={isRecording}
+          paused={isPaused}
+          onPress={() => {
+            if (!isRecording) onToggleMic();
+            else if (isPaused) onResume();
+            else onToggleMic(); // stop
+          }}
+        />
+      </View>
+      
+      {/* Waveform visualization during active recording */}
+      <View style={{ marginTop: spacing.xs, height: 50, justifyContent: 'center' }}>
+        <WaveformVisualizer
+          isActive={isRecording && !isPaused}
+          barCount={5}
+          height={40}
+          color={colors.brand}
+        />
+      </View>
 
       <View
         style={{

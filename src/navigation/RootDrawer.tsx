@@ -228,6 +228,7 @@ function MainAppWithDrawer() {
           borderBottomRightRadius: 16,
         },
       }}
+
       drawerContent={props => <DrawerContent {...props} />}
     >
       <Drawer.Screen name="App" component={MainNavigator} />

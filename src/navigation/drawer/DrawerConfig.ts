@@ -15,7 +15,6 @@ import ProfileIcon from '../../assets/icons/profile.svg'; // DES Added: Import p
 import InvoicesIcon from '../../assets/icons/briefcase.svg' 
 
 // types.ts (or wherever your Drawer types are)
-import * as React from 'react';
 import type { ComponentType } from 'react';
 import type { SvgProps } from 'react-native-svg';
 
@@ -67,6 +66,12 @@ export const drawerItems: DrawerItem[] = [
     label: 'Start Conversation',
     icon: MicIcon,
     action: { type: 'navigate', routeName: 'LanguagePair' },
+  },
+  {
+    id: 'interpretation',
+    label: 'Live Interpretation',
+    icon: MicIcon, // Using same mic icon for now
+    action: { type: 'navigate', routeName: 'Interpretation' },
   },
   {
     id: 'billing',

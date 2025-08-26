@@ -104,7 +104,7 @@ function transcriptToHTML(
 }
 
 // ---- Dummy transcript (for network/offline/demo) ----------------------------
-function makeDummyTranscript(fromLabel: string, toLabel: string) {
+function makeDummyTranscript(_fromLabel: string, _toLabel: string) {
   const lines = [
     {
       a: 'Hello, can you hear me?',
@@ -145,29 +145,7 @@ async function checkMicPermission(): Promise<
   return 'undetermined';
 }
 
-function confirmAsync(
-  title: string,
-  message: string,
-  okText: string = 'Yes',
-  cancelText: string = 'Cancel',
-  destructive = false,
-): Promise<boolean> {
-  return new Promise(resolve => {
-    Alert.alert(
-      title,
-      message,
-      [
-        { text: cancelText, style: 'cancel', onPress: () => resolve(false) },
-        {
-          text: okText,
-          style: destructive ? 'destructive' : 'default',
-          onPress: () => resolve(true),
-        },
-      ],
-      { cancelable: true, onDismiss: () => resolve(false) },
-    );
-  });
-}
+// Removed unused confirmAsync function
 
 async function measureDownMbps(timeoutMs = 6000, bytes = 1_500_000) {
   const url = `https://speed.cloudflare.com/__down?bytes=${bytes}`;
@@ -299,7 +277,7 @@ export default function DashboardScreen() {
     fromLang: pair.from,
     toLang: pair.to,
     mode: turnMode === 'alternate' ? 'alternate' : 'auto-lid',
-    onStatus: s => setTurnStatus(prev => ({ ...prev, s })), // keep dir
+    onStatus: s => setTurnStatus(prev => ({ ...prev, s: s as 'paused' | 'listening' | 'translating' | 'playing' })), // keep dir
     onPartial: () => {},
     onFinal: () => {},
     onError: e => console.warn('Turn engine error', e?.message || e),
@@ -823,6 +801,8 @@ export default function DashboardScreen() {
             onToggleMic={onToggleMic}
             onPause={onPause}
             onResume={onResume}
+            recordingDuration={recordSec}
+            maxDuration={3600} // 1 hour session limit
           />
         </View>
 

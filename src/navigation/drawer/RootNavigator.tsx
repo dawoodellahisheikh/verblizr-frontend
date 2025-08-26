@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDrawerStatus } from '@react-navigation/drawer';
 
 // Theme
-import { colors, type } from '../../theme';
+import { colors } from '../../theme';
 
 // Screens
 // DES Removed: LoginScreen import since it's now in unified stack
@@ -25,6 +25,7 @@ import LanguagePairScreen from '../../screens/LanguagePairScreen';
 import CheckoutScreen from '../../screens/CheckoutScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen'; // DES Added: Import EditProfileScreen
 import PaymentHistoryScreen from '../../screens/PaymentHistoryScreen'; // NEW: Import PaymentHistoryScreen
+import InterpretationScreen from '../../screens/InterpretationScreen'; // NEW: Import InterpretationScreen
 
 // SVG icon (no font linking issues)
 import MenuIcon from '../../assets/icons/menu.svg';
@@ -46,6 +47,7 @@ export type RootStackParamList = {
   LanguagePair: undefined;
   EditProfile: undefined; // DES Added: EditProfile route type
   PaymentHistory: undefined; // NEW: allows navigating to the invoice history screen
+  Interpretation: undefined; // NEW: Live interpretation screen
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -104,7 +106,7 @@ export default function RootNavigator() {
             headerStyle: { backgroundColor: colors.bg },
             headerLeft: () => (
               <MenuButton
-                onPress={() => navigation.getParent()?.openDrawer()}
+                onPress={() => (navigation.getParent() as any)?.openDrawer?.()}
               />
             ),
           })}
@@ -123,7 +125,7 @@ export default function RootNavigator() {
             headerLeft: () => (
               // Use parent navigator to open the drawer from a nested stack:
               <MenuButton
-                onPress={() => navigation.getParent()?.openDrawer()}
+                onPress={() => (navigation.getParent() as any)?.openDrawer?.()}
               />
             ),
           })}
@@ -138,7 +140,7 @@ export default function RootNavigator() {
             headerLeft: () => (
               // Use parent navigator to open the drawer from a nested stack:
               <MenuButton
-                onPress={() => navigation.getParent()?.openDrawer()}
+                onPress={() => (navigation.getParent() as any)?.openDrawer?.()}
               />
             ),
           })}
@@ -154,7 +156,7 @@ export default function RootNavigator() {
             headerStyle: { backgroundColor: colors.bg },
             headerLeft: () => (
               <MenuButton
-                onPress={() => navigation.getParent()?.openDrawer()}
+                onPress={() => (navigation.getParent() as any)?.openDrawer?.()}
               />
             ),
           })}
@@ -168,7 +170,7 @@ export default function RootNavigator() {
             headerStyle: { backgroundColor: colors.bg },
             headerLeft: () => (
               <MenuButton
-                onPress={() => navigation.getParent()?.openDrawer()}
+                onPress={() => (navigation.getParent() as any)?.openDrawer?.()}
               />
             ),
           })}
@@ -181,7 +183,7 @@ export default function RootNavigator() {
             title: 'Payment History & Invoices',
             headerStyle: { backgroundColor: colors.bg },
             headerLeft: () => (
-              <MenuButton onPress={() => navigation.getParent()?.openDrawer()} />
+              <MenuButton onPress={() => (navigation.getParent() as any)?.openDrawer?.()} />
             ),
           })}
         />
@@ -189,6 +191,20 @@ export default function RootNavigator() {
         <Stack.Screen name="FinalPayment" component={FinalPaymentScreen} />
         <Stack.Screen name="LanguagePair" component={LanguagePairScreen} />
         <Stack.Screen name="Checkout" component={CheckoutScreen} />
+        
+        {/* NEW: Live Interpretation screen */}
+        <Stack.Screen
+          name="Interpretation"
+          component={InterpretationScreen}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'Live Interpretation',
+            headerStyle: { backgroundColor: colors.bg },
+            headerLeft: () => (
+              <MenuButton onPress={() => (navigation.getParent() as any)?.openDrawer?.()} />
+            ),
+          })}
+        />
         {/* DES Added: EditProfile screen with header */}
         <Stack.Screen
           name="EditProfile"
@@ -199,7 +215,7 @@ export default function RootNavigator() {
             headerStyle: { backgroundColor: colors.bg },
             headerLeft: () => (
               <MenuButton
-                onPress={() => navigation.getParent()?.openDrawer()}
+                onPress={() => (navigation.getParent() as any)?.openDrawer?.()}
               />
             ),
           })}

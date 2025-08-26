@@ -14,8 +14,9 @@ import {
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { colors, s, spacing } from '../../theme';
+import { colors, spacing } from '../../theme';
 import { drawerItems } from './DrawerConfig';
+import { useAuth } from '../../context/AuthContext';
 
 // ----- Type guard: vector-icon descriptor vs SVG React component -----
 function isVectorIcon(
@@ -53,6 +54,7 @@ function getDeepActiveRouteName(state: any): string {
 export default function DrawerContent(props: DrawerContentComponentProps) {
   const { navigation } = props;
   const insets = useSafeAreaInsets();
+  const { logout } = useAuth();
 
   // Deep active route for nested stacks (Drawer -> "App" -> Stack)
   const currentRouteName = useMemo(() => {
@@ -97,13 +99,10 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
 
     switch (action.type) {
       case 'navigate': {
-        navigation.navigate(
-          'App' as never,
-          {
-            screen: action.routeName,
-            params: action.params,
-          } as never,
-        );
+        navigation.navigate('App', {
+          screen: action.routeName,
+          params: action.params,
+        });
         requestAnimationFrame(() => navigation.closeDrawer());
         break;
       }
@@ -124,10 +123,12 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
               {
                 text: 'Sign out',
                 style: 'destructive',
-                onPress: () => {
+                onPress: async () => {
                   try {
-                    navigation.emit({ type: 'signOut' as any });
-                  } catch {}
+                    await logout(); // Direct logout using auth context
+                  } catch (e) {
+                    console.warn('[Drawer] Logout failed:', e);
+                  }
                   requestAnimationFrame(() => navigation.closeDrawer());
                 },
               },
@@ -408,5 +409,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'rgba(183, 183, 183, 1)',
     marginTop: spacing.xs,
+  },
+  sectionDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#e9e9e9',
+    marginHorizontal: spacing.lg,
+    marginVertical: spacing.sm,
   },
 });
