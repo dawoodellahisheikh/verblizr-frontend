@@ -19,7 +19,6 @@ import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
@@ -74,18 +73,6 @@ function formatInvoiceDate(iso: string): string {
   }
 }
 
-function formatDate(iso: string) {
-  try {
-    const d = new Date(iso);
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${dd}`;
-  } catch {
-    return iso;
-  }
-}
-
 // DES Added: Helper to format date according to user's region with better formatting
 function formatDateForDisplay(date: Date | null): string {
   if (!date) return '';
@@ -104,21 +91,6 @@ function dateToApiFormat(date: Date | null): string | undefined {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
-}
-
-/** Accepts 'DD-MM-YYYY' OR 'YYYY-MM-DD' (also allows slashes) and returns YYYY-MM-DD */
-function normalizeDateInput(s: string): string | undefined {
-  if (!s) return undefined;
-  const t = s.trim().replace(/\//g, '-');
-
-  // YYYY-MM-DD
-  if (/^\d{4}-\d{2}-\d{2}$/.test(t)) return t;
-
-  // DD-MM-YYYY -> YYYY-MM-DD
-  const m = t.match(/^(\d{2})-(\d{2})-(\d{4})$/);
-  if (m) return `${m[3]}-${m[2]}-${m[1]}`;
-
-  return undefined;
 }
 
 // DES Added: Enhanced invoice row component with modern card-like design
@@ -265,8 +237,6 @@ const PAGE_SIZE = 20;
 
 const PaymentHistoryScreen: React.FC = () => {
   const { token } = useAuth();
-  // DES Added: Navigation hook for back functionality
-  const navigation = useNavigation();
   // DES Added: FlatList ref to scroll to top/filters
   const flatListRef = useRef<FlatList>(null);
   // DES Added: ScrollView ref for empty state
@@ -299,7 +269,7 @@ const PaymentHistoryScreen: React.FC = () => {
         const toFilter = dateToApiFormat(toDate);
 
         const data = await listInvoices({
-          token,
+          token: token || undefined,
           from: fromFilter,
           to: toFilter,
           page: pageNum,

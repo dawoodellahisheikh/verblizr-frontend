@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 const DEV_HOST =
   Platform.OS === 'android'
     ? 'http://10.0.2.2:4000'   // Android emulator
-    : 'http://localhost:4000'; // iOS simulator
+    : 'http://192.168.40.23:4000'; // iOS simulator - use host machine IP
 
 const BASE = __DEV__ ? DEV_HOST : 'https://your-prod-api.example.com';
 

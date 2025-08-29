@@ -1,6 +1,6 @@
 // src/screens/CheckoutScreen.tsx
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert, Platform } from 'react-native';
+import { Text, TouchableOpacity, Alert, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { g } from '../styles/global';
 import { spacing, colors } from '../theme';
@@ -33,13 +33,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleApplePay = async () => {
     try {
-      const ok = await payWithApple({
-        amount: 1999, // in minor units = $19.99
-        currencyCode: 'USD',
-        countryCode: 'US',
-        merchantName: 'Verblizr',
-        testEnv: true,
-      });
+      const ok = await payWithApple();
       if (ok) {
         Alert.alert('Payment successful', 'Your Apple Pay transaction completed.');
         navigation.popToTop();
@@ -51,13 +45,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleGooglePay = async () => {
     try {
-      const ok = await payWithGoogle({
-        amount: 1999,
-        currencyCode: 'USD',
-        countryCode: 'US',
-        merchantName: 'Verblizr',
-        testEnv: true,
-      });
+      const ok = await payWithGoogle();
       if (ok) {
         Alert.alert('Payment successful', 'Your Google Pay transaction completed.');
         navigation.popToTop();

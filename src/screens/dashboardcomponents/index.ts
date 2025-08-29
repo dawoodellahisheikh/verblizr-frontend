@@ -30,7 +30,6 @@ export { default as ConfirmStopSheet } from './ConfirmStopSheet';
 
 
 // Optional type re-exports for convenience
-export type { SessionSummary as RecentSessionSummary } from './RecentSessions';
+export type { RecentSessionItem as RecentSessionSummary } from './RecentSessions';
 export type { Utterance as TranscriptUtterance } from './TranscriptModal';
-export type { ConfirmStopSheetProps } from './ConfirmStopSheet';
 export type { RecordingControlsProps } from './RecordingControls';

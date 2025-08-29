@@ -17,8 +17,8 @@
  * });
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState } from 'react-native';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { AppState, type AppStateStatus } from 'react-native';
 
 // =============================================================================
 // TYPES & INTERFACES
@@ -170,12 +170,12 @@ export function useAudioManager(
 ): AudioManagerResult {
   
   // Configuration
-  const audioConfig = { ...DEFAULT_AUDIO_CONFIG, ...config };
+  const audioConfig = useMemo(() => ({ ...DEFAULT_AUDIO_CONFIG, ...config }), [config]);
   
   // State management
   const [state, setState] = useState<AudioSessionState>('idle');
   const [audioLevel, setAudioLevel] = useState(0);
-  const [usingTTSFallback, setUsingTTSFallback] = useState(false);
+  const [usingTTSFallback, _setUsingTTSFallback] = useState(false);
   
   // Derived state
   const isRecording = state === 'recording';
@@ -209,7 +209,7 @@ export function useAudioManager(
           callbacksRef.current.onAudioResumed?.();
         }
       }
-      appStateRef.current = nextAppState;
+      appStateRef.current = nextAppState as AppStateStatus;
     };
     
     const subscription = AppState.addEventListener('change', handleAppStateChange);

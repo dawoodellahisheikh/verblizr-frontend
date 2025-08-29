@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Image, Animated, StatusBar } from 'react-native';
+import { Text, Image, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { colors, motion } from '../theme';
 import { g } from '../styles/global';
@@ -78,7 +78,7 @@ const SplashScreen: React.FC<Props> = ({ navigation }) => {
   ]);
 
   return (
-    <LinearGradient colors={colors.splashGradient} style={[g.screen, g.center]}>
+    <LinearGradient colors={[...colors.splashGradient]} style={[g.screen, g.center]}>
       {/* <StatusBar barStyle="dark-content" backgroundColor={colors.bgSoft} /> */}
       <Animated.View
         style={{

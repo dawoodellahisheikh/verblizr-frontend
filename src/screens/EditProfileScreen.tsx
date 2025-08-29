@@ -511,7 +511,7 @@ const EditProfileScreen: React.FC = () => {
                 <Controller
                   control={profileForm.control}
                   name="title"
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange: _onChange, value } }) => (
                     <Field
                       label="Title"
                       placeholder="Select title"
@@ -527,13 +527,13 @@ const EditProfileScreen: React.FC = () => {
                   <Controller
                     control={profileForm.control}
                     name="firstName"
-                    render={({ field: { onChange, value } }) => (
+                    render={({ field: { onChange: _onChange, value } }) => (
                       <>
                         <Field
                           label="First Name"
                           placeholder="First name"
-                          value={value}
-                          onChangeText={onChange}
+                          value={value || ''}
+                          onChangeText={_onChange}
                         />
                         {profileForm.formState.errors.firstName && (
                           <Text
@@ -553,13 +553,13 @@ const EditProfileScreen: React.FC = () => {
                   <Controller
                     control={profileForm.control}
                     name="lastName"
-                    render={({ field: { onChange, value } }) => (
+                    render={({ field: { onChange: _onChange, value } }) => (
                       <>
                         <Field
                           label="Last Name"
                           placeholder="Last name"
-                          value={value}
-                          onChangeText={onChange}
+                          value={value || ''}
+                          onChangeText={_onChange}
                         />
                         {profileForm.formState.errors.lastName && (
                           <Text
@@ -582,13 +582,13 @@ const EditProfileScreen: React.FC = () => {
                 <Controller
                   control={profileForm.control}
                   name="email"
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange: _onChange, value } }) => (
                     <>
                       <Field
                         label="Email"
                         placeholder="Enter your email"
-                        value={value}
-                        onChangeText={onChange}
+                        value={value || ''}
+                        onChangeText={_onChange}
                         keyboardType="email-address"
                       />
                       {profileForm.formState.errors.email && (
@@ -611,12 +611,12 @@ const EditProfileScreen: React.FC = () => {
                 <Controller
                   control={profileForm.control}
                   name="phone"
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange: _onChange, value } }) => (
                     <Field
                       label="Phone"
                       placeholder="Enter your phone number"
-                      value={value}
-                      onChangeText={onChange}
+                      value={value || ''}
+                      onChangeText={_onChange}
                       keyboardType="phone-pad"
                     />
                   )}
@@ -626,11 +626,11 @@ const EditProfileScreen: React.FC = () => {
                 <Controller
                   control={profileForm.control}
                   name="address"
-                  render={({ field: { onChange, value } }) => (
+                  render={({ field: { onChange: _onChange, value } }) => (
                     <Field
                       label="Address"
                       placeholder="Street address"
-                      value={value}
+                      value={value || ''}
                       onChangeText={onChange}
                       multiline
                     />
@@ -646,7 +646,7 @@ const EditProfileScreen: React.FC = () => {
                       <Field
                         label="City"
                         placeholder="City"
-                        value={value}
+                        value={value || ''}
                         onChangeText={onChange}
                       />
                     )}
@@ -658,7 +658,7 @@ const EditProfileScreen: React.FC = () => {
                       <Field
                         label="State / Province"
                         placeholder="State"
-                        value={value}
+                        value={value || ''}
                         onChangeText={onChange}
                       />
                     )}
@@ -674,7 +674,7 @@ const EditProfileScreen: React.FC = () => {
                       <Field
                         label="Postal Code"
                         placeholder="e.g. 12345"
-                        value={value}
+                        value={value || ''}
                         onChangeText={onChange}
                       />
                     )}
@@ -702,7 +702,7 @@ const EditProfileScreen: React.FC = () => {
                     <Field
                       label="Company"
                       placeholder="Company"
-                      value={value}
+                      value={value || ''}
                       onChangeText={onChange}
                     />
                   )}
@@ -716,7 +716,7 @@ const EditProfileScreen: React.FC = () => {
                     <Field
                       label="About"
                       placeholder="Tell us about yourself"
-                      value={value}
+                      value={value || ''}
                       onChangeText={onChange}
                       multiline
                     />

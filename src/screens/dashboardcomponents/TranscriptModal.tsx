@@ -90,8 +90,8 @@ export default function TranscriptModal({
   toLabel,
 }: TranscriptModalProps) {
   // Prefer explicit label props, else derive from language names, else sensible defaults.
-  const resolvedFromLabel = fromLabel ?? fromLang?.name ?? 'Original';
-  const resolvedToLabel = toLabel ?? toLang?.name ?? 'Translated';
+  const resolvedFromLabel = fromLabel ?? fromLang?.label ?? 'Original';
+  const resolvedToLabel = toLabel ?? toLang?.label ?? 'Translated';
 
   const list = useMemo<Utterance[]>(
     () =>

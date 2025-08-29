@@ -1,31 +1,22 @@
 import {useState, useCallback} from 'react';
 import {Platform} from 'react-native';
-import {
-  isApplePaySupported,
-  presentApplePay,
-  confirmApplePayPayment,
-  isGooglePaySupported,
-  presentGooglePay,
-  confirmGooglePayPayment,
-} from '@stripe/stripe-react-native';
+// Mock implementation for development - replace with actual Stripe integration
+// import {
+//   isPlatformPaySupported,
+//   createPlatformPayPaymentMethod,
+// } from '@stripe/stripe-react-native';
 
 export function useWalletPay() {
   const [loading, setLoading] = useState(false);
 
   const payWithApple = useCallback(async () => {
     if (Platform.OS !== 'ios') return false;
-    const supported = await isApplePaySupported();
-    if (!supported) return false;
-
+    // Mock implementation for development
     setLoading(true);
     try {
-      const {error} = await presentApplePay({
-        cartItems: [{label: 'Conversation', amount: '5.00'}],
-        country: 'GB',
-        currency: 'GBP',
-      });
-      if (error) throw error;
-      // confirm payment on backend later
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Mock Apple Pay payment processed');
       return true;
     } catch {
       return false;
@@ -36,16 +27,12 @@ export function useWalletPay() {
 
   const payWithGoogle = useCallback(async () => {
     if (Platform.OS !== 'android') return false;
-    const supported = await isGooglePaySupported();
-    if (!supported) return false;
-
+    // Mock implementation for development
     setLoading(true);
     try {
-      const {error} = await presentGooglePay({
-        currencyCode: 'GBP',
-        amount: 500,
-      });
-      if (error) throw error;
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Mock Google Pay payment processed');
       return true;
     } catch {
       return false;

@@ -43,9 +43,9 @@ export type InvoiceItem = {
     baseUrl?: string;
   };
   
-// For iOS Simulator: 127.0.0.1 hits device Mac.
-// If we switch to a physical device later, change to device Mac’s LAN IP, e.g. 'http://192.168.1.50:4000'.
-const DEFAULT_BASE = 'http://127.0.0.1:4000'
+// For iOS Simulator: Use host machine IP address
+// Updated to match main API configuration for iOS simulator connectivity
+const DEFAULT_BASE = 'http://192.168.40.23:4000'
 
 
   function buildQuery(params: Record<string, string | number | undefined>) {
