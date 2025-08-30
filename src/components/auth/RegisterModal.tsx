@@ -46,6 +46,7 @@ export default function RegisterModal({ visible, onClose }: Props) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -60,6 +61,11 @@ export default function RegisterModal({ visible, onClose }: Props) {
     },
   });
   const [loading, setLoading] = useState(false);
+
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
 
   const onSubmit = async (_values: FormValues) => {
     try {
@@ -82,18 +88,19 @@ export default function RegisterModal({ visible, onClose }: Props) {
     props?: Partial<React.ComponentProps<typeof TextInput>>,
     containerStyle?: object,
   ) => (
-    <View style={[{ flex: 1 }, containerStyle]}>
-      <Text
-        style={[g.label, { marginTop: spacing.md, marginBottom: spacing.xs }]}
-      >
-        {label}
-      </Text>
+    <View style={[{ flex: 1, marginBottom: spacing.md }, containerStyle]}>
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
           <TextInput
-            style={[g.input]}
+            style={[
+              g.input,
+              !!errors[name] && {
+                borderColor: '#DC2626',
+                borderWidth: 2,
+              }
+            ]}
             onChangeText={field.onChange}
             onBlur={field.onBlur}
             value={(field.value as string) ?? ''}
@@ -101,11 +108,6 @@ export default function RegisterModal({ visible, onClose }: Props) {
           />
         )}
       />
-      {!!errors[name] && (
-        <Text style={{ color: '#DC2626', marginTop: 6 }}>
-          {(errors as any)[name]?.message}
-        </Text>
-      )}
     </View>
   );
 
@@ -114,7 +116,7 @@ export default function RegisterModal({ visible, onClose }: Props) {
       visible={visible}
       transparent
       animationType="slide"
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
     >
       <KeyboardAvoidingView
         behavior={Platform.select({ ios: 'padding', android: undefined })}
@@ -152,7 +154,7 @@ export default function RegisterModal({ visible, onClose }: Props) {
               Become a client
             </Text>
             <TouchableOpacity
-              onPress={onClose}
+              onPress={handleClose}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Text style={{ fontSize: 20 }}>✕</Text>
@@ -168,31 +170,31 @@ export default function RegisterModal({ visible, onClose }: Props) {
             {input(
               'Title',
               'title',
-              { placeholder: 'Mr / Ms / Dr', autoCapitalize: 'words' },
+              { placeholder: 'Title (Mr, Ms, Dr, etc.)', autoCapitalize: 'words' },
               { flex: undefined },
             )}
 
             {/* First + Last in a row */}
             <View style={{ flexDirection: 'row', gap: spacing.md }}>
               {input('First name', 'firstName', {
-                placeholder: 'Jane',
+                placeholder: 'Enter your first name',
                 autoCapitalize: 'words',
               })}
               {input('Last name', 'lastName', {
-                placeholder: 'Doe',
+                placeholder: 'Enter your last name',
                 autoCapitalize: 'words',
               })}
             </View>
 
             {/* Email + Confirm Email */}
             {input('Email', 'email', {
-              placeholder: 'you@example.com',
+              placeholder: 'Enter your email address',
               autoCapitalize: 'none',
               autoCorrect: false,
               keyboardType: 'email-address',
             })}
             {input('Confirm email', 'confirmEmail', {
-              placeholder: 'you@example.com',
+              placeholder: 'Confirm your email address',
               autoCapitalize: 'none',
               autoCorrect: false,
               keyboardType: 'email-address',
@@ -200,11 +202,11 @@ export default function RegisterModal({ visible, onClose }: Props) {
 
             {/* Password + Confirm */}
             {input('Password', 'password', {
-              placeholder: '••••••••',
+              placeholder: 'Create a password (min 8 characters)',
               secureTextEntry: true,
             })}
             {input('Confirm password', 'confirm', {
-              placeholder: '••••••••',
+              placeholder: 'Confirm your password',
               secureTextEntry: true,
             })}
 

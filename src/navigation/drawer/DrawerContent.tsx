@@ -337,8 +337,8 @@ const styles = StyleSheet.create({
 
   // Menu rows
   row: {
-    minHeight: 39,
-    paddingVertical: 11,
+    minHeight: 30,
+    paddingVertical: 6,
     paddingHorizontal: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
@@ -371,9 +371,9 @@ const styles = StyleSheet.create({
     marginRight: spacing.md,
   },
   label: {
-    fontSize: 17,
+    fontSize: 20,
     color: '#000000',
-    fontWeight: '600',
+    fontWeight: '700',
   },
   labelActive: {
     color: colors.black ?? '#000000',

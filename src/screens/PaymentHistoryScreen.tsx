@@ -893,7 +893,7 @@ const PaymentHistoryScreen: React.FC = () => {
                               fontWeight: '800',
                               color: colors.textPrimary,
                             }}>
-                              Payment History
+                              Invoices  
                             </Text>
                           </View>
                           <Text style={{

@@ -631,7 +631,7 @@ const EditProfileScreen: React.FC = () => {
                       label="Address"
                       placeholder="Street address"
                       value={value || ''}
-                      onChangeText={onChange}
+                      onChangeText={_onChange}
                       multiline
                     />
                   )}
@@ -642,24 +642,24 @@ const EditProfileScreen: React.FC = () => {
                   <Controller
                     control={profileForm.control}
                     name="city"
-                    render={({ field: { onChange, value } }) => (
+                    render={({ field: { onChange: _onChange, value } }) => (
                       <Field
                         label="City"
                         placeholder="City"
                         value={value || ''}
-                        onChangeText={onChange}
+                        onChangeText={_onChange}
                       />
                     )}
                   />
                   <Controller
                     control={profileForm.control}
                     name="state"
-                    render={({ field: { onChange, value } }) => (
+                    render={({ field: { onChange: _onChange, value } }) => (
                       <Field
                         label="State / Province"
                         placeholder="State"
                         value={value || ''}
-                        onChangeText={onChange}
+                        onChangeText={_onChange}
                       />
                     )}
                   />

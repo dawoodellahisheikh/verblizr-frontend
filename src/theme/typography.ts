@@ -5,5 +5,5 @@ export const type = StyleSheet.create({
   h2: {fontSize: 24, fontWeight: '700'},
   body: {fontSize: 14},
   caption: { fontSize: 12 },
-  indrawermenu:{ fontSize: 18, fontWeight: '600' },
+  indrawermenu:{ fontSize: 20, fontWeight: '600' },
 });

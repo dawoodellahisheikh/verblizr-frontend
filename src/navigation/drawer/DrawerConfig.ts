@@ -57,16 +57,16 @@ export const drawerItems: DrawerItem[] = [
     visible: true, // DES Added: Temporarily hide to debug
   },{
   id: 'dashboard',
-  label: 'Dashboard + Recording',
+  label: 'Dashboard',
   icon: DashBoardIcon,
   action: { type: 'navigate', routeName: 'Dashboard' }, // <-- was 'DashboardScreen'
   },
-  {
-    id: 'languages',
-    label: 'Start Conversation',
-    icon: MicIcon,
-    action: { type: 'navigate', routeName: 'LanguagePair' },
-  },
+  // {
+  //   id: 'languages',
+  //   label: 'Start Conversation',
+  //   icon: MicIcon,
+  //   action: { type: 'navigate', routeName: 'LanguagePair' },
+  // },
   {
     id: 'interpretation',
     label: 'Live Interpretation',
@@ -81,7 +81,7 @@ export const drawerItems: DrawerItem[] = [
   },
   {
     id: 'invoices',
-    label: 'Payment History & Invoices',
+    label: 'Invoices',
     icon: InvoicesIcon, // use this if you have an invoice icon
     action: { type: 'navigate', routeName: 'PaymentHistory' }, // <-- must match your RootNavigator screen name
   },

@@ -15,7 +15,7 @@ export const colors = {
     // gradients
     splashGradient: ['#f5f5f5', '#ffffff'] as const,
     // DES Added: Main app gradient background colors for consistent theming
-    appGradient: ['#f1f1f1ff', '#FAFAFA', '#FFFFFF'] as const,
+    appGradient: ['#F5F5F5', '#FAFAFA', '#FFFFFF'] as const,
     // DES Added: Gradient locations for smooth transition
     appGradientLocations: [0, 0.6, 1] as const,
   };
