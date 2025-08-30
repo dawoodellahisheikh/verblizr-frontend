@@ -448,11 +448,11 @@ const VADControls: React.FC<VADControlsProps> = ({
             textAlign: 'center',
             lineHeight: 16,
           }}>
-            {state === 'listening' && 'Waiting for speech to begin...'}
-            {state === 'speech' && 'Recording speech - keep talking'}
-            {state === 'silence' && 'Silence detected - processing soon'}
-            {state === 'turn_complete' && 'Turn completed - ready for next speaker'}
-            {state === 'error' && 'Error occurred - please restart'}
+            {state === 'listening' && <Text>Waiting for speech to begin...</Text>}
+            {state === 'speech' && <Text>Recording speech - keep talking</Text>}
+            {state === 'silence' && <Text>Silence detected - processing soon</Text>}
+            {state === 'turn_complete' && <Text>Turn completed - ready for next speaker</Text>}
+            {state === 'error' && <Text>Error occurred - please restart</Text>}
           </Text>
         </View>
       )}
